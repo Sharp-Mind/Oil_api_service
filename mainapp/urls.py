@@ -3,6 +3,7 @@ from mainapp import views
 
 urlpatterns = [
     path('api/v1/reports', views.ReportsAPIView.as_view()),
+    path('api/v1/reports/post', views.ReportsAPIView.as_view()),
 ]
 
 
