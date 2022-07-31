@@ -1,5 +1,6 @@
 from urllib import response
 from rest_framework import serializers
+import oilapiservice.settings as settings
 
 # from snippets.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
 from mainapp.models import Reports
@@ -13,7 +14,7 @@ from mainapp.models import Reports
 
 
 class ReportsSerializer(serializers.Serializer):
-        date = serializers.DateField()
+        date = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
         liquid = serializers.FloatField()
         oil = serializers.FloatField()
         water = serializers.FloatField()
