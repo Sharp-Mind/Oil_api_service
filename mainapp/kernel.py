@@ -30,4 +30,4 @@ def main(date_start, date_fin, lag):
     df_rate = pd.DataFrame({'date':need_dates, 'liquid':signal, 'oil':signal2})
     df_rate['water'] = df_rate['liquid'] - df_rate['oil']
     df_rate['wct'] = df_rate['water']/df_rate['liquid']   
-    return df_rate.to_dict()
+    return df_rate

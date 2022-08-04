@@ -13,12 +13,16 @@ from mainapp.models import Reports
     #     raise NotImplementedError('`create()` must be implemented.')
 
 
-class TasksSerializerReportsSerializer(serializers.Serializer):
+class ReportsSerializer(serializers.Serializer):
+    date_start = serializers.DateField()
+    date_fin = serializers.DateField()
+    lag =  serializers.IntegerField()
+    task_date = serializers.DateField()
     date = serializers.DateField(input_formats=settings.DATE_INPUT_FORMATS)
-    liquid = serializers.FloatField()
-    oil = serializers.FloatField()
-    water = serializers.FloatField()
-    wct = serializers.FloatField()
+    liquid = serializers.CharField()
+    oil = serializers.CharField()
+    water = serializers.CharField()
+    wct = serializers.CharField()
     task_id = serializers.CharField()
 
 class InputSerializer(serializers.Serializer):
