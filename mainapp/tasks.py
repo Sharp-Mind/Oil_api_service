@@ -3,19 +3,26 @@ from cgitb import reset
 from oilapiservice.celery import app
 from celery import Celery
 from mainapp.models import Reports
+from django_celery_results.models import TaskResult
 from mainapp.kernel import main as run
 import pandas as pd
 from celery.result import AsyncResult
 
 @app.task
 def calculate(request_data):
+    # new_report = Reports.objects.create(
+    #     task_id = calculate.request.id,
+    #     task_state = app.AsyncResult(calculate.request.id).state
+    #     )
+
+    # TODO 
     new_report = Reports.objects.create(
-        task_id = calculate.request.id,
-        task_state = app.AsyncResult(calculate.request.id).state
+        task=TaskResult.objects.get(task_id=calculate.request.id)
         )
 
+    
     output_data = run(**request_data)
-    task_result = AsyncResult(calculate.request.id)        
+    # task_result = AsyncResult(calculate.request.id)        
     data_to_base = output_data.to_dict()    
 
     new_report.date_fin = request_data['date_fin']
@@ -28,7 +35,7 @@ def calculate(request_data):
     new_report.water = data_to_base['water']
     new_report.wct = data_to_base['wct']
 
-    new_report.task_state = task_result.status
+    # new_report.task_state = task_result.status
     
     new_report.save()
 

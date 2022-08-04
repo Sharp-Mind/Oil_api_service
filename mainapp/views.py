@@ -3,7 +3,8 @@ from mainapp import serializers
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from mainapp.models import Reports, Tasks
+from mainapp.models import Reports
+from django_celery_results.models import TaskResult
 from mainapp.serializers import ReportsSerializer, InputSerializer
 from mainapp.tasks import calculate
 from celery import Celery
@@ -14,8 +15,7 @@ from mainapp.pagination import StandartResultsSetPagination
 import pandas as pd
 import json
 
-class ReportsListAPIView(generics.ListAPIView):
-    
+class ReportsListAPIView(generics.ListAPIView):    
   
     pagination_class = StandartResultsSetPagination
     serializer_class = ReportsSerializer      
@@ -23,12 +23,19 @@ class ReportsListAPIView(generics.ListAPIView):
     
 
     def get(self, request, *args, **kwargs):
-        # if 'task_id' in request.data.keys():            
-        #     print(AsyncResult(request.data['task_id'], app=app).get())                
+        
+        if 'task_id' in request.data.keys():    
+                      
+            report = Reports.objects.get(task=TaskResult.objects.get(task_id=request.data['task_id']))
+            serializer = self.get_serializer(report)
+
+            return Response(serializer.data)  
+
         return super().get(request, *args, **kwargs)
 
     
-    def post(self, request):
+    def post(self, request): 
+           
         serializer = InputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
