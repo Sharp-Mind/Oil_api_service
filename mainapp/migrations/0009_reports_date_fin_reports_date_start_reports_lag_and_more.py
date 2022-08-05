@@ -7,32 +7,32 @@ import django.utils.timezone
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0008_remove_reports_task_id'),
+        ("mainapp", "0008_remove_reports_task_id"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='reports',
-            name='date_fin',
+            model_name="reports",
+            name="date_fin",
             field=models.DateField(default=django.utils.timezone.now),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='reports',
-            name='date_start',
+            model_name="reports",
+            name="date_start",
             field=models.DateField(default=django.utils.timezone.now),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='reports',
-            name='lag',
+            model_name="reports",
+            name="lag",
             field=models.IntegerField(default=0),
             preserve_default=False,
         ),
         migrations.AddField(
-            model_name='reports',
-            name='task_id',
-            field=models.CharField(default=0, max_length=36, verbose_name='Task ID'),
+            model_name="reports",
+            name="task_id",
+            field=models.CharField(default=0, max_length=36, verbose_name="Task ID"),
             preserve_default=False,
         ),
     ]

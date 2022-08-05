@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0010_reports_task_state_alter_reports_date_fin_and_more'),
+        ("mainapp", "0010_reports_task_state_alter_reports_date_fin_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reports',
-            name='task_state',
-            field=models.CharField(max_length=36, null=True, verbose_name='Task state'),
+            model_name="reports",
+            name="task_state",
+            field=models.CharField(max_length=36, null=True, verbose_name="Task state"),
         ),
     ]

@@ -6,19 +6,30 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0004_delete_tasks_reports_task_date_alter_reports_date_and_more'),
+        ("mainapp", "0004_delete_tasks_reports_task_date_alter_reports_date_and_more"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tasks',
+            name="Tasks",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(auto_now_add=True, verbose_name='Date')),
-                ('task', models.CharField(max_length=36, null=True, verbose_name='Task ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(auto_now_add=True, verbose_name="Date")),
+                (
+                    "task",
+                    models.CharField(max_length=36, null=True, verbose_name="Task ID"),
+                ),
             ],
             options={
-                'ordering': ['date'],
+                "ordering": ["date"],
             },
         ),
     ]

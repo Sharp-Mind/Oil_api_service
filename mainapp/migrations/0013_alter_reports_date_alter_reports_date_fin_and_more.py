@@ -6,48 +6,48 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0012_alter_reports_date_fin_alter_reports_date_start'),
+        ("mainapp", "0012_alter_reports_date_fin_alter_reports_date_start"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='reports',
-            name='date',
-            field=models.CharField(max_length=10000, null=True, verbose_name='Date'),
+            model_name="reports",
+            name="date",
+            field=models.CharField(max_length=10000, null=True, verbose_name="Date"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='date_fin',
-            field=models.DateField(null=True, verbose_name='nput date of finish'),
+            model_name="reports",
+            name="date_fin",
+            field=models.DateField(null=True, verbose_name="nput date of finish"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='date_start',
-            field=models.DateField(null=True, verbose_name='Input date of start'),
+            model_name="reports",
+            name="date_start",
+            field=models.DateField(null=True, verbose_name="Input date of start"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='lag',
-            field=models.IntegerField(null=True, verbose_name='Lag'),
+            model_name="reports",
+            name="lag",
+            field=models.IntegerField(null=True, verbose_name="Lag"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='liquid',
-            field=models.CharField(max_length=10000, null=True, verbose_name='Liquid'),
+            model_name="reports",
+            name="liquid",
+            field=models.CharField(max_length=10000, null=True, verbose_name="Liquid"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='oil',
-            field=models.CharField(max_length=10000, null=True, verbose_name='Oil'),
+            model_name="reports",
+            name="oil",
+            field=models.CharField(max_length=10000, null=True, verbose_name="Oil"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='task_id',
-            field=models.CharField(max_length=36, null=True, verbose_name='Task ID'),
+            model_name="reports",
+            name="task_id",
+            field=models.CharField(max_length=36, null=True, verbose_name="Task ID"),
         ),
         migrations.AlterField(
-            model_name='reports',
-            name='wct',
-            field=models.CharField(max_length=10000, null=True, verbose_name='wct'),
+            model_name="reports",
+            name="wct",
+            field=models.CharField(max_length=10000, null=True, verbose_name="wct"),
         ),
     ]

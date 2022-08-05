@@ -7,19 +7,26 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Reports',
+            name="Reports",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(verbose_name='Date')),
-                ('liquid', models.FloatField(verbose_name='Liquid')),
-                ('oil', models.FloatField(verbose_name='Oil')),
-                ('water', models.FloatField(verbose_name='Water')),
-                ('wct', models.FloatField(verbose_name='wct')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(verbose_name="Date")),
+                ("liquid", models.FloatField(verbose_name="Liquid")),
+                ("oil", models.FloatField(verbose_name="Oil")),
+                ("water", models.FloatField(verbose_name="Water")),
+                ("wct", models.FloatField(verbose_name="wct")),
             ],
         ),
     ]

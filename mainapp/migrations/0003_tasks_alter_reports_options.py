@@ -6,23 +6,34 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('mainapp', '0002_alter_reports_options_reports_task_id'),
+        ("mainapp", "0002_alter_reports_options_reports_task_id"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tasks',
+            name="Tasks",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField(auto_now_add=True, verbose_name='Date')),
-                ('task', models.CharField(max_length=36, null=True, verbose_name='Task ID')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField(auto_now_add=True, verbose_name="Date")),
+                (
+                    "task",
+                    models.CharField(max_length=36, null=True, verbose_name="Task ID"),
+                ),
             ],
             options={
-                'ordering': ['date'],
+                "ordering": ["date"],
             },
         ),
         migrations.AlterModelOptions(
-            name='reports',
+            name="reports",
             options={},
         ),
     ]
