@@ -1,4 +1,4 @@
 from django.contrib import admin
-from mainapp.models import Reports
+from mainapp.models import Calculation
 
-admin.site.register(Reports)
+admin.site.register(Calculation)

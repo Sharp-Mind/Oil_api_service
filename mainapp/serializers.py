@@ -1,15 +1,16 @@
 from rest_framework import serializers
 from oilapiservice.settings import DATE_INPUT_FORMATS
+from mainapp.models import TaskResult
 
-class ReportsSerializer(serializers.Serializer):
-    task_id = serializers.CharField(source="task.task_id", read_only=True)
-    task_created = serializers.CharField(source="task.date_created", read_only=True)
-    task_status = serializers.CharField(source="task.status", read_only=True)
+class CalculationResultSerializer(serializers.Serializer):
+    cid = serializers.CharField()
+    task_created = serializers.DateTimeField()
+    task_status = serializers.CharField(source="TaskResult.objects.get(task_id=cid).status", read_only=True)
 
 
-class OneReportSerializer(serializers.Serializer):
-    task_id = serializers.CharField(source="task.task_id", read_only=True)
-    task_created = serializers.CharField(source="task.date_created", read_only=True)
+class SingleCalculationResultSerializer(serializers.Serializer):
+    cid = serializers.CharField()
+    task_created = serializers.DateTimeField()
     task_status = serializers.CharField(source="task.status", read_only=True)    
     date = serializers.DateField(input_formats=DATE_INPUT_FORMATS)
     liquid = serializers.CharField()
@@ -18,7 +19,7 @@ class OneReportSerializer(serializers.Serializer):
     wct = serializers.CharField()
 
 
-class InputSerializer(serializers.Serializer):
+class CalculationInputSerializer(serializers.Serializer):
     date_start = serializers.DateField(input_formats=DATE_INPUT_FORMATS)
     date_fin = serializers.DateField(input_formats=DATE_INPUT_FORMATS)
     lag = serializers.IntegerField()

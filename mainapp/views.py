@@ -1,44 +1,60 @@
 from rest_framework.views import APIView
 from rest_framework import generics
 from rest_framework.response import Response
-from mainapp.models import Reports
+from mainapp.models import Calculation
 from django_celery_results.models import TaskResult
-from mainapp.serializers import ReportsSerializer, InputSerializer, OneReportSerializer
+from mainapp.serializers import CalculationResultSerializer, CalculationInputSerializer, SingleCalculationResultSerializer
 from celery import Celery
 from mainapp.pagination import StandartResultsSetPagination
 from mainapp.tasks import calculate
 from django.core.exceptions import ObjectDoesNotExist
 
 
-class ReportsListAPIView(generics.ListAPIView):
+class CalculationListAPIView(generics.ListAPIView):
 
     pagination_class = StandartResultsSetPagination
-    serializer_class = ReportsSerializer
-    queryset = Reports.objects.all()
+    serializer_class = CalculationResultSerializer
+    queryset = Calculation.objects.all()
 
-    def get(self, request, *args, **kwargs):
+    ordering_fields = ['task_created']
+    ordering = ['-task_created']
 
-        if "task_id" in request.data.keys():
-
-            try:
-                report = Reports.objects.get(
-                    task=TaskResult.objects.get(task_id=request.data["task_id"])
-                )
-                serializer = OneReportSerializer(report)
-                if report.task.status in ("PENDING", "STARTED"):
-                    return Response("None")
-                return Response(serializer.data)
-
-            except ObjectDoesNotExist:
-                return Response("Does not exist")            
+    def get(self, request, *args, **kwargs):                
 
         return super().get(request, *args, **kwargs)
 
     def post(self, request):
 
-        serializer = InputSerializer(data=request.data)
+        serializer = CalculationInputSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         
         new_task = calculate.delay(request.data)
 
         return Response({"task_id": new_task.id})
+
+class SingleCalculationListAPIView(generics.ListAPIView):
+
+    pagination_class = StandartResultsSetPagination
+    serializer_class = CalculationResultSerializer
+    queryset = Calculation.objects.all()    
+
+    def get(self, request, *args, **kwargs):
+        try:
+            task_obj = TaskResult.objects.get(task_id=self.kwargs['cid'])           
+            calculation = self.queryset.get(cid=self.kwargs['cid'])
+
+            if task_obj.status in ("PENDING", "STARTED"):
+                return Response({"result": "None"})
+            else:
+                elapsed_time = task_obj.date_done - task_obj.date_created
+                serializer = SingleCalculationResultSerializer(calculation)
+                # TODO: 
+                # разобраться с сериализатором и дополнительными полями
+                serializer.is_valid(raise_exception=True)
+                serializer.save(task_status=task_obj.status)
+                if self.kwargs['fields']:
+                    pass        
+                return Response({"result": serializer.data})
+                
+        except ObjectDoesNotExist:
+            return Response({"result": "Does not exist"})
