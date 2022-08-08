@@ -46,14 +46,20 @@ class SingleCalculationListAPIView(generics.ListAPIView):
             if task_obj.status in ("PENDING", "STARTED"):
                 return Response({"result": "None"})
             else:
-                elapsed_time = task_obj.date_done - task_obj.date_created
+                
                 serializer = SingleCalculationResultSerializer(calculation)
-                # TODO: 
-                # разобраться с сериализатором и дополнительными полями
-                serializer.is_valid(raise_exception=True)
-                serializer.save(task_status=task_obj.status)
-                if self.kwargs['fields']:
-                    pass        
+              
+                if 'fields' in request.data.keys():
+                   
+                    optional_fields = dict()
+                    if 'elapsed_time' in request.data['fields']:                       
+                        optional_fields['elapsed_time'] = task_obj.date_done - task_obj.date_created
+
+                    if 'name' in request.data['fields']:
+                        optional_fields['name'] = task_obj.task_name
+                    
+                    return Response({"result": serializer.data, 'optional': optional_fields})
+
                 return Response({"result": serializer.data})
                 
         except ObjectDoesNotExist:
