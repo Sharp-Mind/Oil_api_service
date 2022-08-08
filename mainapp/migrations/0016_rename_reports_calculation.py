@@ -6,13 +6,13 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('django_celery_results', '0011_taskresult_periodic_task_name'),
-        ('mainapp', '0015_remove_reports_date_fin_remove_reports_date_start_and_more'),
+        ("django_celery_results", "0011_taskresult_periodic_task_name"),
+        ("mainapp", "0015_remove_reports_date_fin_remove_reports_date_start_and_more"),
     ]
 
     operations = [
         migrations.RenameModel(
-            old_name='Reports',
-            new_name='Calculation',
+            old_name="Reports",
+            new_name="Calculation",
         ),
     ]

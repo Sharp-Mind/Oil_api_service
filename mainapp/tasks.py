@@ -8,14 +8,12 @@ from mainapp.kernel import main as run
 @app.task
 def calculate(request_data):
 
-    new_calc = Calculation.objects.create(        
-        cid = calculate.request.id
-    )
+    new_calc = Calculation.objects.create(cid=calculate.request.id)
 
     output_data = run(**request_data)
 
     data_to_base = output_data.to_dict()
-   
+
     new_calc.date = data_to_base["date"]
     new_calc.liquid = data_to_base["liquid"]
     new_calc.oil = data_to_base["oil"]
