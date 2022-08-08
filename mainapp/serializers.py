@@ -12,15 +12,20 @@ class TaskResultSerializer(serializers.ModelSerializer):
 
 class CalculationResultSerializer(serializers.ModelSerializer):
     cid = serializers.CharField()
-    task_created = serializers.DateTimeField()
-    task_status = TaskResultSerializer(many=True, read_only=True)
+    task_created = serializers.DateTimeField()    
     class Meta:
         model = Calculation
-        fields = ['cid', 'task_created', 'task_status']
+        fields = ['cid', 'task_created']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['task_status'] = TaskResult.objects.get(task_id=representation['cid']).status
+      
+        return representation
 
 
-class SingleCalculationResultSerializer(serializers.ModelSerializer):    
-    task_status = TaskResultSerializer(many=True, read_only=True)   
+
+class SingleCalculationResultSerializer(serializers.ModelSerializer):      
     class Meta:
         model = Calculation
         fields = [
@@ -30,9 +35,14 @@ class SingleCalculationResultSerializer(serializers.ModelSerializer):
             "liquid",
             "oil",
             "water",
-            "wct",
-            "task_status",
+            "wct"            
         ]
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['task_status'] = TaskResult.objects.get(task_id=representation['cid']).status
+      
+        return representation
 
 
 class CalculationInputSerializer(serializers.Serializer):
