@@ -34,7 +34,7 @@ class CalculationListAPIView(generics.ListAPIView):
 
         new_task = calculate.delay(request.data)
 
-        return Response({"task_id": new_task.id})
+        return Response({"cid": new_task.id})
 
 
 class SingleCalculationListAPIView(generics.ListAPIView):
