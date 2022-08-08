@@ -6,29 +6,21 @@ from mainapp.models import Calculation, TaskResult
 
 class TaskResultSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TaskResult
-        # fields = ('id', 'status')
-        fields = "__all__"
+        model = TaskResult        
+        fields = 'status'
 
 
-class CalculationResultSerializer(serializers.Serializer):
+class CalculationResultSerializer(serializers.ModelSerializer):
     cid = serializers.CharField()
     task_created = serializers.DateTimeField()
-    task_status = serializers.CharField(
-        source="TaskResult.objects.get(task_id=cid).status", read_only=True
-    )
-
-
-class SingleCalculationResultSerializer(serializers.ModelSerializer):
-    # cid = serializers.CharField()
-    # task_created = serializers.DateTimeField()
     task_status = TaskResultSerializer(many=True, read_only=True)
-    # date = serializers.DateField(input_formats=DATE_INPUT_FORMATS)
-    # elapsed_time = serializers.DateTimeField()
-    # liquid = serializers.CharField()
-    # oil = serializers.CharField()
-    # water = serializers.CharField()
-    # wct = serializers.CharField()
+    class Meta:
+        model = Calculation
+        fields = ['cid', 'task_created', 'task_status']
+
+
+class SingleCalculationResultSerializer(serializers.ModelSerializer):    
+    task_status = TaskResultSerializer(many=True, read_only=True)   
     class Meta:
         model = Calculation
         fields = [
