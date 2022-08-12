@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+
+  sqlite3:
+    image: nouchka/sqlite3:latest
+    restart: always
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./:/root/db/
+
+  redis:
+    image: redis:latest
+   
+
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8585
+    volumes:
+      - .:/docker_app
+    ports:
+      - "8585:8585"      
+    depends_on:
+      - sqlite3
+
+  celery:
+    build: .
+    restart: always    
+    image: celery
+    # environment:
+    #   - CELERY_BROKER_URL=redis://redis:6379/0
+    command: celery -A oilapiservice worker --loglevel=info
+    volumes:
+      - ./:/docker_app/
+    depends_on:
+      - sqlite3
+      - redis
