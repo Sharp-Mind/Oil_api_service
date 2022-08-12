@@ -27,9 +27,7 @@ services:
   celery:
     build: .
     restart: always    
-    image: celery
-    # environment:
-    #   - CELERY_BROKER_URL=redis://redis:6379/0
+    image: celery   
     command: celery -A oilapiservice worker --loglevel=info
     volumes:
       - ./:/docker_app/
