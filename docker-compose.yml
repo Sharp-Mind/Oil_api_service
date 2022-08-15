@@ -2,35 +2,24 @@ version: "3.9"
 
 services:
 
-  sqlite3:
-    image: nouchka/sqlite3:latest
-    restart: always
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./:/root/db/
-
-  redis:
-    image: redis:latest
-   
-
-  web:
-    build: .
+  django:
+    image: redlance/oilapiservice
     command: python manage.py runserver 0.0.0.0:8585
     volumes:
       - .:/docker_app
     ports:
-      - "8585:8585"      
-    depends_on:
-      - sqlite3
+      - "8585:8585" 
 
+  redis:
+    image: "redis:alpine"    
+   
+   
   celery:
-    build: .
-    restart: always    
-    image: celery   
+    image: celery  
+    restart: always
     command: celery -A oilapiservice worker --loglevel=info
     volumes:
-      - ./:/docker_app/
+      - .:/docker_app/
     depends_on:
-      - sqlite3
+      - django
       - redis
