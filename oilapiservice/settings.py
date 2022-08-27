@@ -109,3 +109,6 @@ CELERY_RESULT_BACKEND = "django-db"
 CELERY_TASK_TRACK_STARTED = True
 
 DATE_INPUT_FORMATS = ["%Y-%m-%d"]
+
+# Timezone format
+USE_TZ = True
