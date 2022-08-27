@@ -1,7 +1,5 @@
-import json
 import pytest
 from django.urls import reverse
-from rest_framework.exceptions import ErrorDetail
 
 
 @pytest.fixture
