@@ -57,23 +57,3 @@ def test_input_requested_values_validation(api_client):
         response = api_client.post(url, data=data)
         
         assert ('A valid integer is required' in response.data['lag'][0]) == True
-
-@pytest.mark.django_db
-def test_task_start(api_client):  
-
-        task_creation_url = reverse('calculations')        
-
-        data = {
-            'date_start': '2020-12-12',
-            'date_fin': '2020-12-12',
-            'lag': 35
-        }
-        cid = api_client.post(task_creation_url, data=data).data['cid']
-
-        task_request_url = reverse('single_calculation', kwargs={'cid': cid})
-
-        sleep(11)     
-
-        result = api_client.get(task_request_url)
-        
-        assert 'cid' in result.data.keys()
