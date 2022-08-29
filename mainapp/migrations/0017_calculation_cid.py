@@ -13,8 +13,6 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="calculation",
             name="cid",
-            field=models.CharField(
-                max_length=10000, null=True, verbose_name="Calculation task ID"
-            ),
+            field=models.CharField(max_length=10000, null=True, verbose_name="Calculation task ID"),
         ),
     ]

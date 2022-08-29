@@ -58,16 +58,12 @@ class SingleCalculationListAPIView(generics.ListAPIView):
                     optional_fields = dict()
 
                     if "elapsed_time" in request.data["fields"]:
-                        optional_fields["elapsed_time"] = (
-                            task_obj.date_done - task_obj.date_created
-                        )
+                        optional_fields["elapsed_time"] = task_obj.date_done - task_obj.date_created
 
                     if "name" in request.data["fields"]:
                         optional_fields["name"] = task_obj.task_name
 
-                    return Response(
-                        {"result": serializer.data, "optional": optional_fields}
-                    )
+                    return Response({"result": serializer.data, "optional": optional_fields})
 
                 return Response({"result": serializer.data})
 

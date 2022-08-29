@@ -16,9 +16,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="reports",
             name="task_date",
-            field=models.DateField(
-                auto_now_add=True, null=True, verbose_name="Date of raw creation"
-            ),
+            field=models.DateField(auto_now_add=True, null=True, verbose_name="Date of raw creation"),
         ),
         migrations.AlterField(
             model_name="reports",

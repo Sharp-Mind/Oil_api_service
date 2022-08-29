@@ -13,9 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="reports",
             name="task_state",
-            field=models.CharField(
-                default=None, max_length=36, verbose_name="Task state"
-            ),
+            field=models.CharField(default=None, max_length=36, verbose_name="Task state"),
             preserve_default=False,
         ),
         migrations.AlterField(
