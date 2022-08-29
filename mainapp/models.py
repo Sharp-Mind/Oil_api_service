@@ -8,9 +8,5 @@ class Calculation(models.Model):
     oil = models.CharField(verbose_name="Oil", max_length=10000, null=True)
     water = models.CharField(verbose_name="Water", max_length=10000)
     wct = models.CharField(verbose_name="wct", max_length=10000, null=True)
-    cid = models.CharField(
-        verbose_name="Calculation task ID", max_length=10000, null=True
-    )
-    task_created = models.DateTimeField(
-        verbose_name="Date of task creation", auto_now_add=True
-    )
+    cid = models.CharField(verbose_name="Calculation task ID", max_length=10000, null=True)
+    task_created = models.DateTimeField(verbose_name="Date of task creation", auto_now_add=True)
